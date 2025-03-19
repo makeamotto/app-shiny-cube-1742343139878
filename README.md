@@ -6,8 +6,12 @@ A threejs simulation of a cube
 
 This application was generated based on the following prompt:
 
-Create an app based on the Three.js Game template with the following features:
 Infinitely falling/spinning cubes made of glass, metal, and every hard surface material. Make it photorealistic with proper dynamic lighting.
+
+Fix the errors in the code 
+Warning: In HTML, <div> cannot be a descendant of <p>.
+This will cause a hydration error.
+Probably others as well 
 
 ## Getting Started
 
