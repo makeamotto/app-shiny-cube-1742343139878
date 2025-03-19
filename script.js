@@ -1,4 +1,3 @@
-```javascript
 let scene, camera, renderer;
 
 function init() {
@@ -19,7 +18,7 @@ function init() {
   const container = document.getElementById("game-container");
   container.appendChild(renderer.domElement);
 
-  addBasicLighting();
+  addDynamicLighting();
   addFallingCubes();
 
   animate();
@@ -27,24 +26,31 @@ function init() {
   window.addEventListener("resize", onWindowResize, false);
 }
 
-function addBasicLighting() {
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+function addDynamicLighting() {
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
   scene.add(ambientLight);
 
   const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
   dirLight.position.set(5, 10, 7.5);
+  dirLight.castShadow = true;
   scene.add(dirLight);
 
   const pointLight = new THREE.PointLight(0xffffff, 1, 100);
   pointLight.position.set(0, 10, 0);
+  pointLight.castShadow = true;
   scene.add(pointLight);
+
+  const spotLight = new THREE.SpotLight(0xffffff, 0.5);
+  spotLight.position.set(-5, 15, 5);
+  spotLight.castShadow = true;
+  scene.add(spotLight);
 }
 
 function addFallingCubes() {
   const materials = [
-    new THREE.MeshPhysicalMaterial({ color: 0x999999, metalness: 0.8, roughness: 0.2, clearcoat: 1.0 }),
-    new THREE.MeshPhysicalMaterial({ color: 0x333333, metalness: 0.5, roughness: 0.5 }),
-    new THREE.MeshPhysicalMaterial({ color: 0x777777, metalness: 0.3, roughness: 0.7 })
+    new THREE.MeshPhysicalMaterial({ color: 0x999999, metalness: 0.8, roughness: 0.2, clearcoat: 1.0, reflectivity: 0.9 }),
+    new THREE.MeshPhysicalMaterial({ color: 0x333333, metalness: 0.5, roughness: 0.5, reflectivity: 0.7 }),
+    new THREE.MeshPhysicalMaterial({ color: 0x777777, metalness: 0.3, roughness: 0.7, reflectivity: 0.5 })
   ];
 
   const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -93,4 +99,3 @@ function onWindowResize() {
 }
 
 window.onload = init;
-```
