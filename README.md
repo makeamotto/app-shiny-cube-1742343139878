@@ -1,22 +1,16 @@
+```
 # Shiny Cube
 
-A threejs simulation of a cube 
+A Three.js simulation of photorealistic cubes.
 
 ## About
 
-This application was generated based on the following prompt:
-
-Infinitely falling/spinning cubes made of glass, metal, and every hard surface material. Make it photorealistic with proper dynamic lighting.
-
-Fix the errors in the code 
-Warning: In HTML, <div> cannot be a descendant of <p>.
-This will cause a hydration error.
-Probably others as well 
+This application was created to simulate infinitely falling and spinning cubes made of various materials like glass and metal, with photorealistic rendering and dynamic lighting using Three.js.
 
 ## Getting Started
 
-1. Clone this repository
-2. Open index.html in your browser or use a local server
+1. Clone this repository.
+2. Open `index.html` in your browser or use a local server.
 
 ```bash
 # If you have Python installed
@@ -26,3 +20,4 @@ npx serve
 ```
 
 Then open your browser to view the application.
+```
