@@ -20,7 +20,6 @@ body {
     height: 100%;
     position: relative;
     perspective: 1000px; /* Enhance 3D effect */
-    overflow: hidden;
 }
 
 /* Style for the canvas to ensure it covers the entire container */
@@ -77,6 +76,6 @@ canvas {
 
 .cube {
     animation: spin 10s infinite linear;
-    transform-style: preserve-3d;
     will-change: transform;
+    transform-style: preserve-3d;
 }
