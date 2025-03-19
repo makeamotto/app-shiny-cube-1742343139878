@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falling Spinning Cubes</title>
+    <style>
+        body, html {
+            margin: 0;
+            overflow: hidden;
+            height: 100%;
+            background-color: #000;
+        }
+        #scene {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="scene"></div>
+    <script src="https://threejs.org/build/three.min.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('scene').appendChild(renderer.domElement);
+
+        const textureLoader = new THREE.TextureLoader();
+        const woodTexture = textureLoader.load('assets/textures/wood.jpg');
+
+        const materials = [
+            new THREE.MeshStandardMaterial({ color: 0x999999, metalness: 0.8, roughness: 0.2 }),
+            new THREE.MeshStandardMaterial({ color: 0xffffff, opacity: 0.5, transparent: true, roughness: 0.1 }),
+            new THREE.MeshStandardMaterial({ map: woodTexture, roughness: 0.6 })
+        ];
+
+        const cubes = [];
+        for (let i = 0; i < 50; i++) {
+            const geometry = new THREE.BoxGeometry();
+            const material = materials[Math.floor(Math.random() * materials.length)];
+            const cube = new THREE.Mesh(geometry, material);
+            cube.position.set(
+                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.5) * 20
+            );
+            scene.add(cube);
+            cubes.push(cube);
+        }
+
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(5, 10, 7.5);
+        scene.add(light);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            cubes.forEach(cube => {
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                cube.position.y -= 0.02;
+                if (cube.position.y < -10) {
+                    cube.position.y = 10;
+                }
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
