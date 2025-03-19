@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falling Spinning Cubes</title>
+    <style>
+        body, html {
+            margin: 0;
+            overflow: hidden;
+            height: 100%;
+            background-color: #000;
+        }
+        #scene {
+            width: 100vw;
+            height: 100vh;
+            perspective: 1000px;
+            position: relative;
+        }
+        .cube {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-style: preserve-3d;
+            animation: spin 5s infinite linear, fall 10s infinite linear;
+        }
+        .face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.9;
+        }
+        .front  { transform: translateZ(50px); }
+        .back   { transform: rotateY(180deg) translateZ(50px); }
+        .right  { transform: rotateY(90deg) translateZ(50px); }
+        .left   { transform: rotateY(-90deg) translateZ(50px); }
+        .top    { transform: rotateX(90deg) translateZ(50px); }
+        .bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+        @keyframes spin {
+            from { transform: rotateX(0) rotateY(0); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        @keyframes fall {
+            from { top: -100px; }
+            to { top: 100vh; }
+        }
+    </style>
+</head>
+<body>
+    <div id="scene"></div>
+    <script>
+        const scene = document.getElementById('scene');
+        const materials = ['glass', 'metal', 'marble'];
+
+        function createCube(material) {
+            const cube = document.createElement('div');
+            cube.className = 'cube';
+            ['front', 'back', 'right', 'left', 'top', 'bottom'].forEach(faceName => {
+                const face = document.createElement('div');
+                face.className = `face ${faceName}`;
+                face.style.backgroundImage = `url('textures/${material}.jpg')`;
+                cube.appendChild(face);
+            });
+            scene.appendChild(cube);
+        }
+
+        function generateCubes() {
+            materials.forEach(material => {
+                createCube(material);
+            });
+        }
+
+        generateCubes();
+    </script>
+</body>
+</html>
