@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falling Spinning Cubes</title>
+    <style>
+        body, html {
+            margin: 0;
+            overflow: hidden;
+            height: 100%;
+            background-color: #000;
+        }
+        #scene {
+            width: 100vw;
+            height: 100vh;
+            perspective: 1000px;
+            position: relative;
+        }
+        .cube {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform-style: preserve-3d;
+            animation: fall infinite linear, spin infinite linear;
+        }
+        .face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.8;
+        }
+        .front  { transform: translateZ(50px); }
+        .back   { transform: rotateY(180deg) translateZ(50px); }
+        .right  { transform: rotateY(90deg) translateZ(50px); }
+        .left   { transform: rotateY(-90deg) translateZ(50px); }
+        .top    { transform: rotateX(90deg) translateZ(50px); }
+        .bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+        @keyframes fall {
+            0% { top: -100px; }
+            100% { top: 100vh; }
+        }
+        @keyframes spin {
+            0% { transform: rotateX(0) rotateY(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="scene"></div>
+    <script>
+        const scene = document.getElementById('scene');
+
+        function createCube() {
+            const cube = document.createElement('div');
+            cube.className = 'cube';
+            cube.style.animationDuration = `${Math.random() * 5 + 5}s, ${Math.random() * 5 + 5}s`;
+
+            const materials = ['glass', 'metal', 'stone'];
+            const material = materials[Math.floor(Math.random() * materials.length)];
+
+            for (let i = 0; i < 6; i++) {
+                const face = document.createElement('div');
+                face.className = 'face';
+                face.style.backgroundImage = `url('assets/textures/${material}.jpg')`;
+                cube.appendChild(face);
+            }
+
+            scene.appendChild(cube);
+
+            cube.addEventListener('animationiteration', () => {
+                cube.remove();
+                createCube();
+            });
+        }
+
+        for (let i = 0; i < 10; i++) {
+            createCube();
+        }
+    </script>
+</body>
+</html>
